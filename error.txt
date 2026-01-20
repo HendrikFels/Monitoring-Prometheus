@@ -1,4 +1,48 @@
-prometheus@prometheus-Standard-PC-i440FX-PIIX-1996:~/Monitoring-Prometheus$ tree
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+prometheus@prometheus-Standard-PC-i440FX-PIIX-1996:~/Monitoring-Prometheus$ ansible-playbook -i inventory/hosts.yml playbooks/monitoring.yml -v
+Using /home/prometheus/Monitoring-Prometheus/ansible.cfg as config file
+
+PLAY [all] *************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+fatal: [localhost]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"ansible.legacy.setup": {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "failed": true, "module_stderr": "sudo: a password is required\n", "module_stdout": "", "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error", "rc": 1}}, "msg": "The following modules failed to execute: ansible.legacy.setup\n"}
+
+PLAY RECAP *************************************************************************************************************
+localhost                  : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0 prometheus@prometheus-Standard-PC-i440FX-PIIX-1996:~/Monitoring-Prometheus$ tree
 .
 ├── ansible.cfg
 ├── error.txt
