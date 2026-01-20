@@ -1,0 +1,52 @@
+- name: Download Prometheus
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v2.50.0/prometheus-2.50.0.linux-amd64.tar.gz
+    dest: /tmp/prometheus.tar.gz
+
+- name: Extract Prometheus
+  unarchive:
+    src: /tmp/prometheus.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/prometheus-2.50.0.linux-amd64/prometheus
+
+- name: Create Prometheus config directory
+  file:
+    path: /etc/prometheus
+    state: directory
+
+- name: Deploy Prometheus config
+  copy:
+    dest: /etc/prometheus/prometheus.yml
+    content: |
+      global:
+        scrape_interval: 15s
+
+      scrape_configs:
+        - job_name: 'node'
+          static_configs:
+            - targets: ['localhost:9100']
+  notify: restart prometheus
+
+- name: Create systemd service
+  copy:
+    dest: /etc/systemd/system/prometheus.service
+    content: |
+      [Unit]
+      Description=Prometheus
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/prometheus-2.50.0.linux-amd64/prometheus \
+        --config.file=/etc/prometheus/prometheus.yml
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: restart prometheus
+
+- name: Enable and start Prometheus
+  systemd:
+    name: prometheus
+    enabled: yes
+    state: started
