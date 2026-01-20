@@ -1,3 +1,51 @@
+prometheus@prometheus-Standard-PC-i440FX-PIIX-1996:~/Monitoring-Prometheus$ tree
+.
+├── ansible.cfg
+├── error.txt
+├── inventory
+│   └── hosts.yml
+├── playbooks
+│   └── monitoring.yml
+├── README.md
+└── roles
+    ├── grafana
+    │   ├── handlers
+    │   │   └── main.yml
+    │   └── tasks
+    │       └── main.yml
+    ├── node_exporter
+    │   ├── handlers
+    │   │   └── main.yml
+    │   └── tasks
+    │       └── main.yml
+    └── prometheus
+        ├── handlers
+        │   └── main.yml
+        └── tasks
+            └── main.yml
+
+13 directories, 11 files
+prometheus@prometheus-Standard-PC-i440FX-PIIX-1996:~/Monitoring-Prometheus$ ansible-playbook playbooks/monitoring.yml --list-tasks
+
+playbook: playbooks/monitoring.yml
+
+  play #1 (all): all	TAGS: []
+    tasks:
+      node_exporter : Download Node Exporter	TAGS: []
+      node_exporter : Extract Node Exporter	TAGS: []
+      node_exporter : Create systemd service	TAGS: []
+      node_exporter : Enable and start Node Exporter	TAGS: []
+      prometheus : Download Prometheus	TAGS: []
+      prometheus : Extract Prometheus	TAGS: []
+      prometheus : Create Prometheus config directory	TAGS: []
+      prometheus : Deploy Prometheus config	TAGS: []
+      prometheus : Create systemd service	TAGS: []
+      prometheus : Enable and start Prometheus	TAGS: []
+      grafana : Install dependencies	TAGS: []
+      grafana : Add Grafana GPG key	TAGS: []
+      grafana : Add Grafana repository	TAGS: []
+      grafana : Install Grafana	TAGS: []
+      grafana : Enable and start Grafana	TAGS: []
 
 
 
